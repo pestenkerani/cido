@@ -100,11 +100,9 @@ body::before {
         image-rendering: -webkit-optimize-contrast;
     }
     
-    /* Mobilde gradient animasyonunu kapat - Yanıp sönmeyi önlemek için */
+    /* Mobilde gradient animasyonunu çok yavaşlat (kapatma, sadece yavaşlat) */
     body {
-        animation: none !important;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) !important;
-        background-size: 100% 100% !important;
+        animation: gradientShift 60s ease infinite !important;
     }
 }
 
@@ -585,7 +583,7 @@ body::before {
     min-height: 200px;
     position: relative;
     padding: var(--spacing-xl);
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(102, 126, 234, 0.2);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border-radius: var(--radius-xl);
@@ -596,6 +594,7 @@ body::before {
     justify-content: center;
     color: #fff;
     transition: transform 0.2s ease-out;
+    overflow: hidden;
     /* Beyaz flash'ı önlemek için arka plan rengini koru */
     background-color: rgba(102, 126, 234, 0.15);
     overflow: hidden;
@@ -630,7 +629,7 @@ body::before {
 }
 
 .lyric-card {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(102, 126, 234, 0.25);
     backdrop-filter: blur(30px) saturate(200%);
     -webkit-backdrop-filter: blur(30px) saturate(200%);
     border-radius: var(--radius-lg);
@@ -641,19 +640,25 @@ body::before {
                 0 2px 4px rgba(0, 0, 0, 0.08),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+    transform: translateY(30px) scale(0.95);
+    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 1s cubic-bezier(0.4, 0, 0.2, 1);
     position: absolute;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 1;
     pointer-events: none;
+    /* GPU hızlandırması */
+    will-change: opacity, transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
 }
 
 .lyric-card.active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     position: relative;
     z-index: 2;
     pointer-events: auto;
@@ -2697,35 +2702,31 @@ body.fenerbahce-theme .number {
         -webkit-overflow-scrolling: touch;
     }
     
-    /* Mobilde gradient animasyonunu kapat - Yanıp sönmeyi önlemek için */
+    /* Gradient animasyonunu yavaşlat (kapatma, sadece yavaşlat) */
     body {
-        animation: none !important;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) !important;
-        background-size: 100% 100% !important;
+        animation: gradientShift 60s ease infinite !important;
     }
     
     .splash-screen {
-        animation: none !important;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) !important;
-        background-size: 100% 100% !important;
+        animation: gradientShift 50s ease infinite !important;
     }
     
-    /* Animasyonları azalt veya kapat */
+    /* Animasyonları yavaşlat (tamamen kapatma) */
     * {
-        animation-duration: 0.3s !important;
+        animation-duration: 2s !important;
     }
     
-    /* Sürekli çalışan animasyonları kapat */
+    /* Sürekli çalışan animasyonları yavaşlat */
     .title-text {
-        animation: none !important;
+        animation: shimmer 6s linear infinite !important;
     }
     
     .title-star {
-        animation: none !important;
+        animation: starTwinkle 4s ease-in-out infinite !important;
     }
     
     .pulse {
-        animation: none !important;
+        animation: pulse 4s ease-in-out infinite !important;
     }
     
     /* Backdrop-filter'ı azalt */
@@ -2763,37 +2764,41 @@ body.fenerbahce-theme .number {
         -webkit-overflow-scrolling: touch;
     }
     
-    /* Gereksiz animasyonları kapat - Yanıp sönmeyi önlemek için */
+    /* Animasyonları yavaşlat (tamamen kapatma) */
     .stars .star {
-        animation: none !important;
-        opacity: 0.6 !important;
+        animation-duration: 4s !important;
+        opacity: 0.7 !important;
     }
     
     .sparkle {
-        animation: none !important;
+        animation-duration: 2s !important;
     }
     
     .splash-sparkle {
-        animation: none !important;
+        animation-duration: 4s !important;
     }
     
-    /* Pulse animasyonlarını kapat */
-    .pulse,
-    .pulseGlow,
-    .surprisePulse,
+    /* Pulse animasyonlarını yavaşlat */
+    .pulseGlow {
+        animation-duration: 4s !important;
+    }
+    
+    .surprisePulse {
+        animation-duration: 4s !important;
+    }
+    
     .dangerPulse {
-        animation: none !important;
+        animation-duration: 3s !important;
     }
     
-    /* Shimmer animasyonunu kapat */
-    .shimmer {
-        animation: none !important;
-    }
-    
-    /* Float animasyonlarını kapat */
+    /* Float animasyonlarını yavaşlat */
     .float,
     .surpriseFloat {
-        animation: none !important;
+        animation-duration: 6s !important;
+    }
+    
+    .splash-image-wrapper {
+        animation-duration: 6s !important;
     }
     
     /* Box-shadow'ları azalt */
@@ -2808,7 +2813,15 @@ body.fenerbahce-theme .number {
     }
     
     /* Transform optimizasyonu */
-    .lyric-card,
+    .lyric-card {
+        transform: translateZ(0);
+        will-change: opacity, transform;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), 
+                    transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
     .heart-btn,
     .option-btn {
         transform: translateZ(0);

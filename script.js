@@ -33,17 +33,43 @@ let currentLyricIndex = 0;
 const lyricCards = document.querySelectorAll('.lyric-card');
 
 function rotateLyrics() {
-    // Önce yeni card'ı göster, sonra eskisini gizle (cross-fade)
+    // Smooth cross-fade geçişi
     const nextIndex = (currentLyricIndex + 1) % lyricCards.length;
+    const currentCard = lyricCards[currentLyricIndex];
+    const nextCard = lyricCards[nextIndex];
     
-    // Yeni card'ı aktif et
-    lyricCards[nextIndex].classList.add('active');
+    if (!currentCard || !nextCard) return;
     
-    // Kısa bir gecikme ile eski card'ı kaldır (smooth geçiş için)
-    setTimeout(() => {
-        lyricCards[currentLyricIndex].classList.remove('active');
-        currentLyricIndex = nextIndex;
-    }, 100);
+    // Yeni card'ı hazırla (görünmez başlat)
+    nextCard.style.opacity = '0';
+    nextCard.style.transform = 'translateY(30px) scale(0.95)';
+    nextCard.classList.add('active');
+    
+    // requestAnimationFrame ile smooth geçiş
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            // Yeni card fade-in
+            nextCard.style.transition = 'opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1)';
+            nextCard.style.opacity = '1';
+            nextCard.style.transform = 'translateY(0) scale(1)';
+            
+            // Eski card fade-out (biraz gecikme ile cross-fade için)
+            setTimeout(() => {
+                currentCard.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                currentCard.style.opacity = '0';
+                currentCard.style.transform = 'translateY(-20px) scale(0.95)';
+                
+                // Eski card'ı temizle
+                setTimeout(() => {
+                    currentCard.classList.remove('active');
+                    currentCard.style.opacity = '';
+                    currentCard.style.transform = '';
+                    currentCard.style.transition = '';
+                    currentLyricIndex = nextIndex;
+                }, 800);
+            }, 200);
+        });
+    });
 }
 
 // Kalp butonu interaktif özellik
@@ -579,7 +605,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Şarkı sözlerini 5 saniyede bir değiştir
-    setInterval(rotateLyrics, 5000);
+    // Şarkı sözlerini daha uzun aralıklarla değiştir (smooth geçiş için)
+    setInterval(rotateLyrics, 6000);
     
     // Scroll performans optimizasyonu - Passive event listeners
     let ticking = false;
