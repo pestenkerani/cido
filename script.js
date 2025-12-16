@@ -33,9 +33,17 @@ let currentLyricIndex = 0;
 const lyricCards = document.querySelectorAll('.lyric-card');
 
 function rotateLyrics() {
-    lyricCards[currentLyricIndex].classList.remove('active');
-    currentLyricIndex = (currentLyricIndex + 1) % lyricCards.length;
-    lyricCards[currentLyricIndex].classList.add('active');
+    // Önce yeni card'ı göster, sonra eskisini gizle (cross-fade)
+    const nextIndex = (currentLyricIndex + 1) % lyricCards.length;
+    
+    // Yeni card'ı aktif et
+    lyricCards[nextIndex].classList.add('active');
+    
+    // Kısa bir gecikme ile eski card'ı kaldır (smooth geçiş için)
+    setTimeout(() => {
+        lyricCards[currentLyricIndex].classList.remove('active');
+        currentLyricIndex = nextIndex;
+    }, 100);
 }
 
 // Kalp butonu interaktif özellik
@@ -572,6 +580,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Şarkı sözlerini 5 saniyede bir değiştir
     setInterval(rotateLyrics, 5000);
+    
+    // Scroll performans optimizasyonu - Passive event listeners
+    let ticking = false;
+    function optimizeScroll() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                // Scroll sırasında yapılacak işlemler buraya
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+    
+    // Passive scroll listener ekle (performans için)
+    window.addEventListener('scroll', optimizeScroll, { passive: true });
+    window.addEventListener('touchmove', optimizeScroll, { passive: true });
     
     // Yıldızları oluştur
     createStars();

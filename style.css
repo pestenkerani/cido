@@ -28,6 +28,11 @@
                          inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
+html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
 body {
     font-family: var(--font-primary);
     font-weight: 400;
@@ -49,6 +54,9 @@ body {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
+    /* Scroll performans optimizasyonu */
+    will-change: scroll-position;
+    overscroll-behavior: contain;
 }
 
 /* Reduce motion desteği */
@@ -312,6 +320,10 @@ body::before {
     max-width: 1400px;
     margin: 0 auto;
     box-sizing: border-box;
+    /* Scroll performans optimizasyonu */
+    transform: translateZ(0);
+    will-change: scroll-position;
+    -webkit-overflow-scrolling: touch;
 }
 
 .header {
@@ -582,6 +594,9 @@ body::before {
     justify-content: center;
     color: #fff;
     transition: transform 0.2s ease-out;
+    /* Beyaz flash'ı önlemek için arka plan rengini koru */
+    background-color: rgba(102, 126, 234, 0.15);
+    overflow: hidden;
     overflow: hidden;
     transform: translateZ(0);
     text-align: center;
@@ -625,17 +640,21 @@ body::before {
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
     opacity: 0;
     transform: translateY(20px);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
     position: absolute;
     width: 100%;
     top: 0;
     left: 0;
+    z-index: 1;
+    pointer-events: none;
 }
 
 .lyric-card.active {
     opacity: 1;
     transform: translateY(0);
     position: relative;
+    z-index: 2;
+    pointer-events: auto;
 }
 
 .lyric-text {
@@ -2670,6 +2689,12 @@ body.fenerbahce-theme .number {
 
 /* Mobil performans optimizasyonları */
 @media (max-width: 768px) {
+    /* Smooth scroll için */
+    html {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+    }
+    
     /* Animasyonları azalt */
     * {
         animation-duration: 0.3s !important;
@@ -2696,6 +2721,27 @@ body.fenerbahce-theme .number {
     .heart-btn,
     .lyric-card {
         will-change: transform;
+    }
+    
+    /* Scroll performans optimizasyonu - Tüm section'lar için */
+    .header,
+    .countdown-section,
+    .lyrics-section,
+    .message-section,
+    .interactive-section,
+    .footer,
+    .quiz-section,
+    .container {
+        transform: translateZ(0);
+        will-change: transform;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        contain: layout style paint;
+    }
+    
+    /* Smooth scroll için */
+    * {
+        -webkit-overflow-scrolling: touch;
     }
     
     /* Gereksiz animasyonları azalt */
