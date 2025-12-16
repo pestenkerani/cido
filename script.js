@@ -33,18 +33,22 @@ let currentLyricIndex = 0;
 const lyricCards = document.querySelectorAll('.lyric-card');
 
 function rotateLyrics() {
-    // Perfect smooth cross-fade geçişi
+    // Perfect smooth cross-fade geçişi - üst üste geçiş
     const nextIndex = (currentLyricIndex + 1) % lyricCards.length;
     const currentCard = lyricCards[currentLyricIndex];
     const nextCard = lyricCards[nextIndex];
     
     if (!currentCard || !nextCard) return;
     
+    // Eski kartın z-index'ini düşür (yeni kart üstte olacak)
+    currentCard.style.zIndex = '1';
+    
     // GPU acceleration için translate3d kullan
-    // Yeni card'ı hazırla (görünmez, hafif aşağıda ve küçük)
+    // Yeni card'ı hazırla (görünmez, hafif aşağıda ve küçük, üstte)
     nextCard.style.opacity = '0';
     nextCard.style.transform = 'translate3d(0, 25px, 0) scale(0.96)';
     nextCard.style.transition = 'none';
+    nextCard.style.zIndex = '2';
     nextCard.classList.add('active');
     
     // requestAnimationFrame ile perfect timing
@@ -67,6 +71,7 @@ function rotateLyrics() {
                     currentCard.style.opacity = '';
                     currentCard.style.transform = '';
                     currentCard.style.transition = '';
+                    currentCard.style.zIndex = '';
                     currentLyricIndex = nextIndex;
                 }, 1000);
             }, 300); // Perfect overlap için 300ms gecikme

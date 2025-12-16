@@ -589,16 +589,12 @@ body::before {
     border-radius: var(--radius-xl);
     border: none;
     box-shadow: var(--card-shadow);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
     color: #fff;
     transition: transform 0.2s ease-out;
     overflow: hidden;
     /* Beyaz flash'ı önlemek için arka plan rengini koru */
     background-color: rgba(102, 126, 234, 0.15);
-    overflow: hidden;
-    overflow: hidden;
     transform: translateZ(0);
     text-align: center;
 }
@@ -644,9 +640,10 @@ body::before {
     transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
                 transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
+    width: calc(100% - calc(var(--spacing-xl) * 2));
+    top: var(--spacing-xl);
+    left: var(--spacing-xl);
+    right: var(--spacing-xl);
     z-index: 1;
     pointer-events: none;
     /* GPU hızlandırması - optimize edilmiş */
@@ -664,7 +661,7 @@ body::before {
 .lyric-card.active {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
-    position: relative;
+    position: absolute;
     z-index: 2;
     pointer-events: auto;
 }
@@ -2859,7 +2856,9 @@ body.fenerbahce-theme .number {
     }
     
     .lyric-card.active {
+        position: absolute;
         transform: translate3d(0, 0, 0) scale(1);
+        z-index: 2;
     }
     
     .heart-btn,
