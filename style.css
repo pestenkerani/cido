@@ -160,7 +160,7 @@ body::before {
 
 .splash-image-wrapper {
     margin-bottom: 30px;
-    animation: float 3s ease-in-out infinite;
+    animation: float 6s ease-in-out infinite;
     filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
 }
 
@@ -169,7 +169,7 @@ body::before {
         transform: translateY(0px);
     }
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-15px);
     }
 }
 
@@ -2702,31 +2702,49 @@ body.fenerbahce-theme .number {
         -webkit-overflow-scrolling: touch;
     }
     
-    /* Gradient animasyonunu yavaşlat (kapatma, sadece yavaşlat) */
+    /* Gradient animasyonunu çok yavaşlat */
     body {
-        animation: gradientShift 60s ease infinite !important;
+        animation: gradientShift 90s ease infinite !important;
     }
     
     .splash-screen {
-        animation: gradientShift 50s ease infinite !important;
+        animation: gradientShift 80s ease infinite !important;
     }
     
-    /* Animasyonları yavaşlat (tamamen kapatma) */
+    /* Tüm animasyonları çok yavaşlat */
     * {
-        animation-duration: 2s !important;
+        animation-duration: 4s !important;
     }
     
-    /* Sürekli çalışan animasyonları yavaşlat */
+    /* Sürekli çalışan animasyonları çok yavaşlat */
     .title-text {
-        animation: shimmer 6s linear infinite !important;
+        animation: shimmer 10s linear infinite !important;
     }
     
     .title-star {
-        animation: starTwinkle 4s ease-in-out infinite !important;
+        animation: starTwinkle 8s ease-in-out infinite !important;
     }
     
     .pulse {
-        animation: pulse 4s ease-in-out infinite !important;
+        animation: pulse 6s ease-in-out infinite !important;
+    }
+    
+    /* Splash screen fotoğraf animasyonunu çok yavaşlat */
+    .splash-image-wrapper {
+        animation: float 12s ease-in-out infinite !important;
+    }
+    
+    /* Işık yanıp sönmelerini çok yavaşlat */
+    .pulseGlow {
+        animation-duration: 8s !important;
+    }
+    
+    .surprisePulse {
+        animation-duration: 8s !important;
+    }
+    
+    .dangerPulse {
+        animation-duration: 6s !important;
     }
     
     /* Backdrop-filter'ı azalt */
@@ -2764,41 +2782,53 @@ body.fenerbahce-theme .number {
         -webkit-overflow-scrolling: touch;
     }
     
-    /* Animasyonları yavaşlat (tamamen kapatma) */
+    /* Animasyonları çok yavaşlat (tamamen kapatma) */
     .stars .star {
-        animation-duration: 4s !important;
+        animation-duration: 8s !important;
         opacity: 0.7 !important;
     }
     
     .sparkle {
-        animation-duration: 2s !important;
+        animation-duration: 4s !important;
     }
     
     .splash-sparkle {
-        animation-duration: 4s !important;
+        animation-duration: 8s !important;
     }
     
-    /* Pulse animasyonlarını yavaşlat */
+    /* Pulse animasyonlarını çok yavaşlat */
     .pulseGlow {
-        animation-duration: 4s !important;
+        animation-duration: 6s !important;
     }
     
     .surprisePulse {
-        animation-duration: 4s !important;
+        animation-duration: 6s !important;
     }
     
     .dangerPulse {
-        animation-duration: 3s !important;
+        animation-duration: 5s !important;
     }
     
-    /* Float animasyonlarını yavaşlat */
+    /* Float animasyonlarını çok yavaşlat */
     .float,
     .surpriseFloat {
-        animation-duration: 6s !important;
+        animation-duration: 12s !important;
     }
     
     .splash-image-wrapper {
-        animation-duration: 6s !important;
+        animation: float 15s ease-in-out infinite !important;
+    }
+    
+    /* Mobilde float hareketini azalt (daha yumuşak) */
+    @media (max-width: 768px) {
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
     }
     
     /* Box-shadow'ları azalt */
