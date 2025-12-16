@@ -104,7 +104,11 @@ function showSpecialMessage(message) {
 // Yıldız efekti - Optimize edilmiş
 function createStars() {
     const starsContainer = document.querySelector('.stars');
-    const numberOfStars = 20; // 50'den 20'ye düşürüldü
+    if (!starsContainer) return;
+    
+    // Mobilde yıldız sayısını azalt
+    const isMobile = window.innerWidth <= 768;
+    const numberOfStars = isMobile ? 8 : 20;
 
     for (let i = 0; i < numberOfStars; i++) {
         const star = document.createElement('div');
@@ -489,7 +493,9 @@ function createSplashSparkles() {
     const sparklesContainer = document.querySelector('.splash-sparkles');
     if (!sparklesContainer) return;
     
-    const numberOfSparkles = 10; // 30'dan 10'a düşürüldü
+    // Mobilde sparkle sayısını azalt
+    const isMobile = window.innerWidth <= 768;
+    const numberOfSparkles = isMobile ? 5 : 10;
     
     for (let i = 0; i < numberOfSparkles; i++) {
         const sparkle = document.createElement('div');

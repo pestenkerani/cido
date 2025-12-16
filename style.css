@@ -44,6 +44,22 @@ body {
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.01em;
     transform: translateZ(0);
+    /* Mobil performans optimizasyonu */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Reduce motion desteği */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 body::before {
@@ -69,8 +85,16 @@ body::before {
         background-size: 100% auto;
         background-position: center top;
         background-repeat: repeat-y;
-        opacity: 0.1;
+        opacity: 0.08;
         transform: translateZ(0);
+        /* Mobilde background image performansını artır */
+        will-change: opacity;
+        image-rendering: -webkit-optimize-contrast;
+    }
+    
+    /* Mobilde gradient animasyonunu yavaşlat */
+    body {
+        animation: gradientShift 40s ease infinite;
     }
 }
 
@@ -2644,7 +2668,64 @@ body.fenerbahce-theme .number {
     }
 }
 
+/* Mobil performans optimizasyonları */
 @media (max-width: 768px) {
+    /* Animasyonları azalt */
+    * {
+        animation-duration: 0.3s !important;
+    }
+    
+    /* Gradient animasyonunu yavaşlat */
+    body {
+        animation: gradientShift 30s ease infinite;
+    }
+    
+    .splash-screen {
+        animation: gradientShift 25s ease infinite;
+    }
+    
+    /* Backdrop-filter'ı azalt */
+    [class*="backdrop-filter"],
+    [class*="backdrop"] {
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
+    }
+    
+    /* Will-change optimizasyonu */
+    .splash-image-wrapper,
+    .heart-btn,
+    .lyric-card {
+        will-change: transform;
+    }
+    
+    /* Gereksiz animasyonları azalt */
+    .stars .star {
+        animation-duration: 3s !important;
+    }
+    
+    .sparkle {
+        animation-duration: 1s !important;
+    }
+    
+    /* Box-shadow'ları azalt */
+    .header,
+    .countdown-section,
+    .lyrics-section,
+    .message-section,
+    .interactive-section,
+    .footer,
+    .quiz-section {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    /* Transform optimizasyonu */
+    .lyric-card,
+    .heart-btn,
+    .option-btn {
+        transform: translateZ(0);
+        will-change: transform;
+    }
+    
     .container {
         padding: 15px;
         gap: 15px;

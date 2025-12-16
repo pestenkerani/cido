@@ -175,45 +175,110 @@
                 return;
             }
             
-            // Google Charts API kullanarak QR kod oluştur
-            const qrSize = 300;
-            const qrUrl = `https://chart.googleapis.com/chart?chs=${qrSize}x${qrSize}&cht=qr&chl=${encodeURIComponent(url)}`;
-            
             const qrContainer = document.getElementById('qrContainer');
-            qrContainer.innerHTML = `
-                <img src="${qrUrl}" alt="QR Code" class="qr-code" id="qrImage">
-                <p style="margin-top: 15px; color: #666; font-size: 12px;">${url}</p>
-            `;
             
-            // Download butonunu göster
-            document.getElementById('downloadBtn').classList.add('show');
+            // Loading göster
+            qrContainer.innerHTML = '<p style="color: #999;">QR kod oluşturuluyor...</p>';
             
-            // QR kod URL'ini sakla (download için)
-            document.getElementById('downloadBtn').dataset.qrUrl = qrUrl;
+            // QR Code API kullanarak QR kod oluştur (daha güvenilir)
+            const qrSize = 300;
+            
+            // Birkaç farklı API deneyelim
+            const apis = [
+                `https://api.qrserver.com/v1/create-qr-code/?size=${qrSize}x${qrSize}&data=${encodeURIComponent(url)}`,
+                `https://chart.googleapis.com/chart?chs=${qrSize}x${qrSize}&cht=qr&chl=${encodeURIComponent(url)}`,
+                `https://quickchart.io/qr?text=${encodeURIComponent(url)}&size=${qrSize}`
+            ];
+            
+            // İlk API'yi dene
+            const qrUrl = apis[0];
+            const img = new Image();
+            
+            img.onload = function() {
+                qrContainer.innerHTML = `
+                    <img src="${qrUrl}" alt="QR Code" class="qr-code" id="qrImage" style="max-width: 100%; height: auto; border-radius: 8px;">
+                    <p style="margin-top: 15px; color: #666; font-size: 12px; word-break: break-all;">${url}</p>
+                `;
+                
+                // Download butonunu göster
+                document.getElementById('downloadBtn').classList.add('show');
+                
+                // QR kod URL'ini sakla (download için)
+                document.getElementById('downloadBtn').dataset.qrUrl = qrUrl;
+                document.getElementById('downloadBtn').dataset.url = url;
+            };
+            
+            img.onerror = function() {
+                // İlk API çalışmazsa ikinciyi dene
+                const img2 = new Image();
+                img2.onload = function() {
+                    const qrUrl2 = apis[1];
+                    qrContainer.innerHTML = `
+                        <img src="${qrUrl2}" alt="QR Code" class="qr-code" id="qrImage" style="max-width: 100%; height: auto; border-radius: 8px;">
+                        <p style="margin-top: 15px; color: #666; font-size: 12px; word-break: break-all;">${url}</p>
+                    `;
+                    document.getElementById('downloadBtn').classList.add('show');
+                    document.getElementById('downloadBtn').dataset.qrUrl = qrUrl2;
+                    document.getElementById('downloadBtn').dataset.url = url;
+                };
+                img2.onerror = function() {
+                    qrContainer.innerHTML = `
+                        <p style="color: #d32f2f;">QR kod oluşturulamadı. Lütfen tekrar deneyin.</p>
+                        <p style="color: #666; font-size: 12px; margin-top: 10px;">Alternatif: https://www.qr-code-generator.com/ sitesini kullanabilirsiniz.</p>
+                    `;
+                };
+                img2.src = apis[1];
+            };
+            
+            img.src = qrUrl;
         }
         
         function downloadQR() {
             const qrUrl = document.getElementById('downloadBtn').dataset.qrUrl;
-            const url = document.getElementById('urlInput').value.trim();
+            const url = document.getElementById('downloadBtn').dataset.url;
             
             if (!qrUrl) {
                 alert('Önce QR kod oluşturun!');
                 return;
             }
             
-            // QR kodunu indir
-            const link = document.createElement('a');
-            link.href = qrUrl;
-            link.download = 'taylor-anniversary-qr.png';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // QR kodunu fetch ile indir
+            fetch(qrUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'cido-anniversary-qr.png';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(link.href);
+                })
+                .catch(error => {
+                    console.error('İndirme hatası:', error);
+                    // Alternatif yöntem
+                    const link = document.createElement('a');
+                    link.href = qrUrl;
+                    link.download = 'cido-anniversary-qr.png';
+                    link.target = '_blank';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                });
         }
         
         // Enter tuşu ile QR kod oluştur
         document.getElementById('urlInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 generateQR();
+            }
+        });
+        
+        // Sayfa yüklendiğinde varsayılan URL'i otomatik oluştur
+        window.addEventListener('load', function() {
+            const urlInput = document.getElementById('urlInput');
+            if (!urlInput.value) {
+                urlInput.value = 'https://pestenkerani.github.io/cido/';
             }
         });
     </script>
