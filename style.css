@@ -96,13 +96,15 @@ body::before {
         opacity: 0.08;
         transform: translateZ(0);
         /* Mobilde background image performansını artır */
-        will-change: opacity;
+        will-change: auto;
         image-rendering: -webkit-optimize-contrast;
     }
     
-    /* Mobilde gradient animasyonunu yavaşlat */
+    /* Mobilde gradient animasyonunu kapat - Yanıp sönmeyi önlemek için */
     body {
-        animation: gradientShift 40s ease infinite;
+        animation: none !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) !important;
+        background-size: 100% 100% !important;
     }
 }
 
@@ -2695,18 +2697,35 @@ body.fenerbahce-theme .number {
         -webkit-overflow-scrolling: touch;
     }
     
-    /* Animasyonları azalt */
+    /* Mobilde gradient animasyonunu kapat - Yanıp sönmeyi önlemek için */
+    body {
+        animation: none !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) !important;
+        background-size: 100% 100% !important;
+    }
+    
+    .splash-screen {
+        animation: none !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) !important;
+        background-size: 100% 100% !important;
+    }
+    
+    /* Animasyonları azalt veya kapat */
     * {
         animation-duration: 0.3s !important;
     }
     
-    /* Gradient animasyonunu yavaşlat */
-    body {
-        animation: gradientShift 30s ease infinite;
+    /* Sürekli çalışan animasyonları kapat */
+    .title-text {
+        animation: none !important;
     }
     
-    .splash-screen {
-        animation: gradientShift 25s ease infinite;
+    .title-star {
+        animation: none !important;
+    }
+    
+    .pulse {
+        animation: none !important;
     }
     
     /* Backdrop-filter'ı azalt */
@@ -2744,13 +2763,37 @@ body.fenerbahce-theme .number {
         -webkit-overflow-scrolling: touch;
     }
     
-    /* Gereksiz animasyonları azalt */
+    /* Gereksiz animasyonları kapat - Yanıp sönmeyi önlemek için */
     .stars .star {
-        animation-duration: 3s !important;
+        animation: none !important;
+        opacity: 0.6 !important;
     }
     
     .sparkle {
-        animation-duration: 1s !important;
+        animation: none !important;
+    }
+    
+    .splash-sparkle {
+        animation: none !important;
+    }
+    
+    /* Pulse animasyonlarını kapat */
+    .pulse,
+    .pulseGlow,
+    .surprisePulse,
+    .dangerPulse {
+        animation: none !important;
+    }
+    
+    /* Shimmer animasyonunu kapat */
+    .shimmer {
+        animation: none !important;
+    }
+    
+    /* Float animasyonlarını kapat */
+    .float,
+    .surpriseFloat {
+        animation: none !important;
     }
     
     /* Box-shadow'ları azalt */
