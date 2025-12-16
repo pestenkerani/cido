@@ -606,21 +606,7 @@ body::before {
 }
 
 .lyrics-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, 
-        transparent, 
-        rgba(255, 255, 255, 0.4) 20%,
-        rgba(255, 215, 0, 0.6) 50%,
-        rgba(255, 255, 255, 0.4) 80%,
-        transparent
-    );
-    opacity: 0.8;
-    animation: shimmer 3s ease-in-out infinite;
+    display: none;
 }
 
 .lyrics-section::after {
@@ -652,7 +638,7 @@ body::before {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 40px 48px 36px;
+    padding: 48px 52px 44px;
     text-align: center;
     opacity: 0;
     transform: translate3d(0, 20px, 0) scale(0.98);
@@ -689,90 +675,63 @@ body::before {
 .lyric-card::before {
     content: '"';
     position: absolute;
-    top: 16px;
-    left: 40px;
+    top: 24px;
+    left: 48px;
     font-family: var(--font-display);
-    font-size: 6rem;
-    color: rgba(255, 255, 255, 0.25);
+    font-size: 5.5rem;
+    color: rgba(255, 255, 255, 0.2);
     line-height: 1;
     font-weight: 700;
     pointer-events: none;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     z-index: 0;
 }
 
 .lyric-card::after {
     content: '"';
     position: absolute;
-    bottom: 16px;
-    right: 40px;
+    bottom: 24px;
+    right: 48px;
     font-family: var(--font-display);
-    font-size: 6rem;
-    color: rgba(255, 255, 255, 0.25);
+    font-size: 5.5rem;
+    color: rgba(255, 255, 255, 0.2);
     line-height: 1;
     font-weight: 700;
     pointer-events: none;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     z-index: 0;
 }
 
 .lyric-text {
     font-family: var(--font-display);
-    font-size: clamp(1.3rem, 2.5vw, 2rem);
+    font-size: clamp(1.4rem, 2.8vw, 2.1rem);
     font-style: italic;
     font-weight: 500;
-    margin: 0 0 28px 0;
-    line-height: 1.7;
+    margin: 0;
+    line-height: 1.65;
     color: rgba(255, 255, 255, 1);
     text-shadow: 0 3px 20px rgba(0, 0, 0, 0.5),
                  0 1px 4px rgba(0, 0, 0, 0.3),
-                 0 0 30px rgba(255, 255, 255, 0.15);
-    letter-spacing: 0.03em;
-    max-width: 85%;
+                 0 0 30px rgba(255, 255, 255, 0.12);
+    letter-spacing: 0.02em;
+    max-width: 88%;
     position: relative;
     z-index: 1;
 }
 
 .song-title {
     font-family: var(--font-primary);
-    font-size: clamp(0.95rem, 1.6vw, 1.15rem);
-    font-weight: 600;
-    opacity: 0.95;
-    color: rgba(255, 255, 255, 1);
-    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.5),
-                 0 1px 4px rgba(0, 0, 0, 0.4),
-                 0 0 20px rgba(255, 255, 255, 0.2);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin: 8px 0 0 0;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    font-weight: 500;
+    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4),
+                 0 1px 3px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.05em;
+    text-transform: none;
+    margin: 20px 0 0 0;
     position: relative;
     z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 8px 20px;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.song-title::before {
-    content: '🎵';
-    opacity: 0.9;
-    margin-right: 4px;
-    font-size: 1em;
-}
-
-.song-title::after {
-    content: '🎵';
-    opacity: 0.9;
-    margin-left: 4px;
-    font-size: 1em;
 }
 
 .message-section {
@@ -3012,18 +2971,18 @@ body.fenerbahce-theme .number {
     
     .lyric-card::before,
     .lyric-card::after {
-        font-size: 4rem;
-        opacity: 0.18;
+        font-size: 3.5rem;
+        opacity: 0.15;
     }
     
     .lyric-card::before {
-        top: 8px;
-        left: 16px;
+        top: 16px;
+        left: 20px;
     }
     
     .lyric-card::after {
-        bottom: 8px;
-        right: 16px;
+        bottom: 16px;
+        right: 20px;
     }
     
     .lyric-text {
@@ -3034,16 +2993,9 @@ body.fenerbahce-theme .number {
     }
     
     .song-title {
-        font-size: clamp(0.85rem, 3.5vw, 1rem);
-        padding: 6px 16px;
-        margin-top: 4px;
-        gap: 8px;
-        letter-spacing: 0.1em;
-    }
-    
-    .song-title::before,
-    .song-title::after {
-        font-size: 0.9em;
+        font-size: clamp(0.9rem, 3.8vw, 1.05rem);
+        margin-top: 16px;
+        letter-spacing: 0.04em;
     }
     
     .song-title {
