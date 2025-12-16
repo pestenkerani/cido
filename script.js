@@ -33,41 +33,43 @@ let currentLyricIndex = 0;
 const lyricCards = document.querySelectorAll('.lyric-card');
 
 function rotateLyrics() {
-    // Smooth cross-fade geçişi
+    // Perfect smooth cross-fade geçişi
     const nextIndex = (currentLyricIndex + 1) % lyricCards.length;
     const currentCard = lyricCards[currentLyricIndex];
     const nextCard = lyricCards[nextIndex];
     
     if (!currentCard || !nextCard) return;
     
-    // Yeni card'ı hazırla (görünmez başlat)
+    // GPU acceleration için translate3d kullan
+    // Yeni card'ı hazırla (görünmez, hafif aşağıda ve küçük)
     nextCard.style.opacity = '0';
-    nextCard.style.transform = 'translateY(30px) scale(0.95)';
+    nextCard.style.transform = 'translate3d(0, 25px, 0) scale(0.96)';
+    nextCard.style.transition = 'none';
     nextCard.classList.add('active');
     
-    // requestAnimationFrame ile smooth geçiş
+    // requestAnimationFrame ile perfect timing
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-            // Yeni card fade-in
-            nextCard.style.transition = 'opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1)';
+            // Yeni card fade-in (smooth ve yavaş)
+            nextCard.style.transition = 'opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
             nextCard.style.opacity = '1';
-            nextCard.style.transform = 'translateY(0) scale(1)';
+            nextCard.style.transform = 'translate3d(0, 0, 0) scale(1)';
             
-            // Eski card fade-out (biraz gecikme ile cross-fade için)
+            // Eski card fade-out (perfect cross-fade için 300ms sonra başla)
             setTimeout(() => {
-                currentCard.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                currentCard.style.transition = 'opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                 currentCard.style.opacity = '0';
-                currentCard.style.transform = 'translateY(-20px) scale(0.95)';
+                currentCard.style.transform = 'translate3d(0, -15px, 0) scale(0.98)';
                 
-                // Eski card'ı temizle
+                // Eski card'ı temizle (geçiş tamamlandıktan sonra)
                 setTimeout(() => {
                     currentCard.classList.remove('active');
                     currentCard.style.opacity = '';
                     currentCard.style.transform = '';
                     currentCard.style.transition = '';
                     currentLyricIndex = nextIndex;
-                }, 800);
-            }, 200);
+                }, 1000);
+            }, 300); // Perfect overlap için 300ms gecikme
         });
     });
 }
@@ -604,9 +606,9 @@ document.addEventListener('DOMContentLoaded', function() {
         lyricCards[0].classList.add('active');
     }
     
-    // Şarkı sözlerini 5 saniyede bir değiştir
     // Şarkı sözlerini daha uzun aralıklarla değiştir (smooth geçiş için)
-    setInterval(rotateLyrics, 6000);
+    // Perfect timing: 7 saniye (geçiş animasyonu için yeterli süre)
+    setInterval(rotateLyrics, 7000);
     
     // Scroll performans optimizasyonu - Passive event listeners
     let ticking = false;

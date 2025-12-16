@@ -640,25 +640,30 @@ body::before {
                 0 2px 4px rgba(0, 0, 0, 0.08),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
     opacity: 0;
-    transform: translateY(30px) scale(0.95);
-    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), 
-                transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translate3d(0, 25px, 0) scale(0.96);
+    transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: absolute;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 1;
     pointer-events: none;
-    /* GPU hızlandırması */
+    /* GPU hızlandırması - optimize edilmiş */
     will-change: opacity, transform;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transform-style: preserve-3d;
+    /* Smooth rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Performans optimizasyonu */
+    contain: layout style paint;
 }
 
 .lyric-card.active {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
     position: relative;
     z-index: 2;
     pointer-events: auto;
@@ -2842,14 +2847,19 @@ body.fenerbahce-theme .number {
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
     }
     
-    /* Transform optimizasyonu */
+    /* Transform optimizasyonu - GPU acceleration */
     .lyric-card {
-        transform: translateZ(0);
+        transform: translate3d(0, 0, 0);
         will-change: opacity, transform;
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
-        transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), 
-                    transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                    transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        contain: layout style paint;
+    }
+    
+    .lyric-card.active {
+        transform: translate3d(0, 0, 0) scale(1);
     }
     
     .heart-btn,
