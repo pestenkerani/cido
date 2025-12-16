@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Kod Oluşturucu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .qr-container {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 12px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .qr-code {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        .download-btn {
+            margin-top: 20px;
+            background: #4CAF50;
+            display: none;
+        }
+        
+        .download-btn.show {
+            display: block;
+        }
+        
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 12px;
+            margin-top: 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 QR Kod Oluşturucu</h1>
+        <p class="subtitle">Sayfanın URL'ini gir ve QR kodunu oluştur</p>
+        
+        <div class="input-group">
+            <label for="urlInput">Sayfa URL'i:</label>
+            <input 
+                type="text" 
+                id="urlInput" 
+                placeholder="https://kullanici-adin.github.io/taylor-anniversary/"
+                value=""
+            >
+        </div>
+        
+        <button onclick="generateQR()">QR Kod Oluştur ✨</button>
+        
+        <div class="qr-container" id="qrContainer">
+            <p style="color: #999;">QR kod burada görünecek</p>
+        </div>
+        
+        <button class="download-btn" id="downloadBtn" onclick="downloadQR()">
+            QR Kodu İndir 💾
+        </button>
+        
+        <div class="info">
+            <strong>💡 İpucu:</strong> QR kodu yazdırıp sevgiline ver. Telefonuyla okutunca sayfa açılacak!
+        </div>
+    </div>
+
+    <script>
+        function generateQR() {
+            const url = document.getElementById('urlInput').value.trim();
+            
+            if (!url) {
+                alert('Lütfen bir URL girin!');
+                return;
+            }
+            
+            // URL'i validate et
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                alert('URL http:// veya https:// ile başlamalı!');
+                return;
+            }
+            
+            // Google Charts API kullanarak QR kod oluştur
+            const qrSize = 300;
+            const qrUrl = `https://chart.googleapis.com/chart?chs=${qrSize}x${qrSize}&cht=qr&chl=${encodeURIComponent(url)}`;
+            
+            const qrContainer = document.getElementById('qrContainer');
+            qrContainer.innerHTML = `
+                <img src="${qrUrl}" alt="QR Code" class="qr-code" id="qrImage">
+                <p style="margin-top: 15px; color: #666; font-size: 12px;">${url}</p>
+            `;
+            
+            // Download butonunu göster
+            document.getElementById('downloadBtn').classList.add('show');
+            
+            // QR kod URL'ini sakla (download için)
+            document.getElementById('downloadBtn').dataset.qrUrl = qrUrl;
+        }
+        
+        function downloadQR() {
+            const qrUrl = document.getElementById('downloadBtn').dataset.qrUrl;
+            const url = document.getElementById('urlInput').value.trim();
+            
+            if (!qrUrl) {
+                alert('Önce QR kod oluşturun!');
+                return;
+            }
+            
+            // QR kodunu indir
+            const link = document.createElement('a');
+            link.href = qrUrl;
+            link.download = 'taylor-anniversary-qr.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Enter tuşu ile QR kod oluştur
+        document.getElementById('urlInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateQR();
+            }
+        });
+    </script>
+</body>
+</html>
+

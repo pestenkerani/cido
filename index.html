@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Çido ve Dodo'nun özel yıldönümü sayfası - Taylor Swift ile birlikte">
+    <meta name="theme-color" content="#ff69b4">
+    <title>Bizim Hikayemiz ✨</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-image-wrapper">
+                <img src="gemini.png" alt="Çido ve Taylor" class="splash-image">
+            </div>
+            <h1 class="splash-title">Çido ve Taylor'ın Dünyasına Hoş Geldiniz</h1>
+            <p class="splash-dodo">(Biraz da Dodo)</p>
+            <p class="splash-subtitle">Tıklayarak devam edin...</p>
+            <div class="splash-sparkles"></div>
+        </div>
+    </div>
+
+    <!-- Arka Plan Müziği - Görünmez -->
+    <audio id="backgroundAudio" loop style="display: none;">
+        <source src="music/maroon.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Kıraç 100. Yıl Marşı -->
+    <audio id="fenerbahceMars" style="display: none;">
+        <source src="music/kirac-100-yil-mars.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container" id="mainContainer" style="display: none;">
+        <div class="stars"></div>
+        
+        <header class="header">
+            <h1 class="title">
+                <span class="title-star">✨</span>
+                <span class="title-text">Çido ve Dodo</span>
+                <span class="title-star">✨</span>
+            </h1>
+            <p class="subtitle">Taylor Swift ile birlikte...</p>
+        </header>
+
+        <div class="countdown-section">
+            <h2>Birlikte Geçirdiğimiz Süre</h2>
+            <p class="countdown-subtitle">4 Ekim 2025, 16:00'dan beri...</p>
+            <div class="countdown" id="countdown">
+                <div class="time-unit">
+                    <span class="number" id="days">00</span>
+                    <span class="label">Gün</span>
+                </div>
+                <div class="time-unit">
+                    <span class="number" id="hours">00</span>
+                    <span class="label">Saat</span>
+                </div>
+                <div class="time-unit">
+                    <span class="number" id="minutes">00</span>
+                    <span class="label">Dakika</span>
+                </div>
+                <div class="time-unit">
+                    <span class="number" id="seconds">00</span>
+                    <span class="label">Saniye</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="lyrics-section">
+            <div class="lyric-card active" id="lyric1">
+                <p class="lyric-text">"You are the best thing that's ever been mine"</p>
+                <p class="song-title">- Mine</p>
+            </div>
+            <div class="lyric-card" id="lyric2">
+                <p class="lyric-text">"I've loved you three summers now, honey, but I want 'em all"</p>
+                <p class="song-title">- Lover</p>
+            </div>
+            <div class="lyric-card" id="lyric3">
+                <p class="lyric-text">"All's well that ends well to end up with you"</p>
+                <p class="song-title">- Lover</p>
+            </div>
+            <div class="lyric-card" id="lyric4">
+                <p class="lyric-text">"I don't wanna look at anything else now that I saw you"</p>
+                <p class="song-title">- Daylight</p>
+            </div>
+            <div class="lyric-card" id="lyric5">
+                <p class="lyric-text">"You're my, my, my, my lover"</p>
+                <p class="song-title">- Lover</p>
+            </div>
+            <div class="lyric-card" id="lyric6">
+                <p class="lyric-text">"And at every table, I'll save you a seat"</p>
+                <p class="song-title">- Lover</p>
+            </div>
+            <div class="lyric-card" id="lyric7">
+                <p class="lyric-text">"My heart's been borrowed and yours has been blue, all's well that ends well to end up with you"</p>
+                <p class="song-title">- Lover</p>
+            </div>
+            <div class="lyric-card" id="lyric8">
+                <p class="lyric-text">"I want your midnights, but I'll be cleaning up bottles with you on New Year's Day"</p>
+                <p class="song-title">- New Year's Day</p>
+            </div>
+            <div class="lyric-card" id="lyric9">
+                <p class="lyric-text">"You are in love, true love"</p>
+                <p class="song-title">- You Are In Love</p>
+            </div>
+            <div class="lyric-card" id="lyric10">
+                <p class="lyric-text">"And I can see you years from now in a bar, talking over a football game with that same big loud opinion"</p>
+                <p class="song-title">- All Too Well</p>
+            </div>
+            <div class="lyric-card" id="lyric11">
+                <p class="lyric-text">"I'd like to be my old self again, but I'm still trying to find it"</p>
+                <p class="song-title">- All Too Well</p>
+            </div>
+            <div class="lyric-card" id="lyric12">
+                <p class="lyric-text">"And you call me up again just to break me like a promise, so casually cruel in the name of being honest"</p>
+                <p class="song-title">- All Too Well</p>
+            </div>
+            <div class="lyric-card" id="lyric13">
+                <p class="lyric-text">"I'm a fire and I'll keep your brittle heart warm"</p>
+                <p class="song-title">- Peace</p>
+            </div>
+            <div class="lyric-card" id="lyric14">
+                <p class="lyric-text">"I'd give you my sunshine, give you my best, but the rain is always gonna come if you're standing with me"</p>
+                <p class="song-title">- Peace</p>
+            </div>
+            <div class="lyric-card" id="lyric15">
+                <p class="lyric-text">"I want you for worse or for better, I would wait forever and ever"</p>
+                <p class="song-title">- Lover</p>
+            </div>
+            <div class="lyric-card" id="lyric16">
+                <p class="lyric-text">"You're the one I want, in paper rings, in picture frames, in dirty dreams"</p>
+                <p class="song-title">- Paper Rings</p>
+            </div>
+            <div class="lyric-card" id="lyric17">
+                <p class="lyric-text">"I like shiny things, but I'd marry you with paper rings"</p>
+                <p class="song-title">- Paper Rings</p>
+            </div>
+            <div class="lyric-card" id="lyric18">
+                <p class="lyric-text">"I once believed love would be burning red, but it's golden, like daylight"</p>
+                <p class="song-title">- Daylight</p>
+            </div>
+            <div class="lyric-card" id="lyric19">
+                <p class="lyric-text">"I want to be defined by the things that I love, not the things I hate"</p>
+                <p class="song-title">- Daylight</p>
+            </div>
+            <div class="lyric-card" id="lyric20">
+                <p class="lyric-text">"You showed me colors you know I can't see with anyone else"</p>
+                <p class="song-title">- You Are In Love</p>
+            </div>
+            <div class="lyric-card" id="lyric21">
+                <p class="lyric-text">"And you understand now why they lost their minds and fought the wars, and why I've spent my whole life trying to put it into words"</p>
+                <p class="song-title">- You Are In Love</p>
+            </div>
+            <div class="lyric-card" id="lyric22">
+                <p class="lyric-text">"I want to wear his initial on a chain round my neck, not because he owns me, but 'cause he really knows me"</p>
+                <p class="song-title">- Call It What You Want</p>
+            </div>
+            <div class="lyric-card" id="lyric23">
+                <p class="lyric-text">"My baby's fit like a daydream, walking with his head down, I'm the one he's walking to"</p>
+                <p class="song-title">- Call It What You Want</p>
+            </div>
+            <div class="lyric-card" id="lyric24">
+                <p class="lyric-text">"I want to drive away with you, I want your complications too, I want your dreary Mondays"</p>
+                <p class="song-title">- Paper Rings</p>
+            </div>
+            <div class="lyric-card" id="lyric25">
+                <p class="lyric-text">"I'd marry you with paper rings, uh huh, that's right, darling, you're the one I want"</p>
+                <p class="song-title">- Paper Rings</p>
+            </div>
+            <div class="lyric-card" id="lyric26">
+                <p class="lyric-text">"And I know I make the same mistakes every time, bridges burn, I never learn, at least I did one thing right"</p>
+                <p class="song-title">- Call It What You Want</p>
+            </div>
+            <div class="lyric-card" id="lyric27">
+                <p class="lyric-text">"I want to be your end game, I want to be your first string"</p>
+                <p class="song-title">- End Game</p>
+            </div>
+            <div class="lyric-card" id="lyric28">
+                <p class="lyric-text">"I want to be your A-Team, I want to be your end game"</p>
+                <p class="song-title">- End Game</p>
+            </div>
+            <div class="lyric-card" id="lyric29">
+                <p class="lyric-text">"And I can't talk to you when you're like this, staring out the window like I'm not your favorite town"</p>
+                <p class="song-title">- Cornelia Street</p>
+            </div>
+            <div class="lyric-card" id="lyric30">
+                <p class="lyric-text">"I hope I never lose you, hope it never ends, I'd never walk Cornelia Street again"</p>
+                <p class="song-title">- Cornelia Street</p>
+            </div>
+        </div>
+
+        <div class="message-section">
+            <h2>💕 Senin İçin 💕</h2>
+            <div class="message-box">
+                <p>Her günün, her anın özel. Birlikte geçirdiğimiz bu ilk ay sadece başlangıç. Seninle olmak, Taylor Swift'in şarkılarını dinlemek, birlikte gülmek, birlikte hayal kurmak... Her şey daha güzel, daha anlamlı.</p>
+                <p>Seninle geçirdiğim her saniye, her kahkahamız, her bakışımız, her dokunuşumuz... Hepsi benim için bir hazine. Seninle olduğumda zaman duruyor, dünya daha renkli görünüyor, her şarkı bizim hikayemizi anlatıyor.</p>
+                <p>Taylor Swift'in şarkıları gibi, bizim hikayemiz de başladı ve her gün daha da güzelleşiyor. Seninle birlikte yaşadığımız her an, her anı, her hatıra... Hepsi benim için çok değerli.</p>
+                <p>Bu küçük sayfa, senin için yapıldı. Çünkü sen, benim için en özelisin. Seninle geçirdiğimiz her gün, birlikte dinlediğimiz her şarkı, paylaştığımız her gülüş... Hepsi benim kalbimde özel bir yerde. Sen benim hayatımın en güzel şarkısısın. ❤️</p>
+            </div>
+        </div>
+
+        <div class="interactive-section">
+            <button class="heart-btn" id="heartBtn">💖</button>
+            <p class="click-message">Kalbe tıkla ve sürprizi gör! ✨</p>
+            <div class="sparkles" id="sparkles"></div>
+        </div>
+
+        <button class="music-toggle-btn" id="musicToggleBtn" title="Müzik Listesi">
+            <span class="music-btn-icon">🎵</span>
+        </button>
+
+        <!-- Taylor Swift Bilgi Butonu -->
+        <button class="taylor-info-btn" id="taylorInfoBtn" title="Taylor Swift Hakkında">
+            <span class="info-icon">ℹ️</span>
+        </button>
+
+        <button class="surprise-btn" id="surpriseBtn" title="Sürpriz! 🎁">
+            <span class="surprise-icon">🎁</span>
+        </button>
+
+        <button class="danger-btn" id="dangerBtn" title="SAKIN BASMA! ⚠️">
+            <span class="danger-icon">⚠️</span>
+            <span class="danger-text">SAKIN BASMA</span>
+        </button>
+
+        <!-- Taylor Swift Bilgi Penceresi -->
+        <div class="taylor-info-modal" id="taylorInfoModal">
+            <div class="info-modal-content">
+                <button class="close-info-modal" id="closeInfoModal">✕</button>
+                <h2>✨ Taylor Swift Hakkında ✨</h2>
+                <div class="info-content" id="infoContent">
+                    <!-- Bilgiler JavaScript ile eklenecek -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Sürpriz Modal -->
+        <div class="surprise-modal" id="surpriseModal">
+            <div class="surprise-modal-content">
+                <button class="close-surprise-modal" id="closeSurpriseModal">✕</button>
+                <div class="surprise-images-container">
+                    <div class="surprise-image-wrapper">
+                        <img src="gemini2.png" alt="Sürpriz!" class="surprise-image" data-image="gemini2.png">
+                    </div>
+                    <div class="surprise-image-wrapper">
+                        <img src="gemini3.png" alt="Sürpriz!" class="surprise-image" data-image="gemini3.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image Zoom Overlay -->
+        <div class="image-zoom-overlay" id="imageZoomOverlay">
+            <img src="" alt="Zoomed Image" class="image-zoom-content" id="zoomedImage">
+        </div>
+
+        <!-- Taylor Swift Quiz Bölümü -->
+        <div class="quiz-section" id="quizSection">
+            <h2><span class="quiz-emoji">🎤</span> <span class="quiz-text">Taylor Swift Quiz</span> <span class="quiz-emoji">🎤</span></h2>
+            <p class="quiz-subtitle">Ne kadar Taylor Swift hayranısın? Test et! 🎵</p>
+            
+            <div class="quiz-container" id="quizContainer">
+                <div class="quiz-start" id="quizStart">
+                    <p>30 soruluk Taylor Swift bilgi yarışmasına hazır mısın?</p>
+                    <button class="start-quiz-btn" id="startQuizBtn">Quiz'e Başla! 🎯</button>
+                </div>
+                
+                <div class="quiz-questions" id="quizQuestions" style="display: none;">
+                    <!-- Sorular buraya eklenecek -->
+                </div>
+                
+                <div class="quiz-results" id="quizResults" style="display: none;">
+                    <!-- Sonuçlar buraya eklenecek -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Hakkımızda Quiz Bölümü -->
+        <div class="quiz-section" id="hakkimizdaQuizSection">
+            <h2><span class="quiz-emoji">💕</span> <span class="quiz-text">Hakkımızda Quiz</span> <span class="quiz-emoji">💕</span></h2>
+            <p class="quiz-subtitle">Birlikte geçirdiğimiz anıları ne kadar hatırlıyorsun? Test et! 🎯</p>
+            
+            <div class="quiz-container" id="hakkimizdaQuizContainer">
+                <div class="quiz-start" id="hakkimizdaQuizStart">
+                    <p>10 soruluk hakkımızda bilgi yarışmasına hazır mısın?</p>
+                    <button class="start-quiz-btn" id="startHakkimizdaQuizBtn">Quiz'e Başla! 🎯</button>
+                </div>
+                
+                <div class="quiz-questions" id="hakkimizdaQuizQuestions" style="display: none;">
+                    <!-- Sorular buraya eklenecek -->
+                </div>
+                
+                <div class="quiz-results" id="hakkimizdaQuizResults" style="display: none;">
+                    <!-- Sonuçlar buraya eklenecek -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Sağ Altta Liste Şeklinde Playlist -->
+        <div class="side-playlist" id="sidePlaylist">
+            <div class="side-playlist-header">
+                <h3>🎵 Çalma Listesi</h3>
+                <button class="close-side-playlist" id="closeSidePlaylist">✕</button>
+            </div>
+            <div class="side-playlist-songs" id="sidePlaylistSongs">
+                <!-- Şarkılar buraya eklenecek -->
+            </div>
+            <div class="side-player-wrapper" id="sidePlayerWrapper" style="display: none;">
+                <div class="side-spotify-player" id="sideSpotifyPlayer"></div>
+            </div>
+        </div>
+
+        <div class="development-notice">
+            <p>Geliştirilmeye devam edilecek... ✨</p>
+        </div>
+
+        <footer class="footer">
+            <p>Made with ❤️ for you</p>
+            <p class="taylor-credit">Inspired by Taylor Swift</p>
+        </footer>
+    </div>
+
+    <script src="taylor-info.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
